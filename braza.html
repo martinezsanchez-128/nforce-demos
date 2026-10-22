@@ -1,0 +1,1063 @@
+<!doctype html>
+<html lang="es-MX">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#0B0908" />
+        <meta
+            name="description"
+            content="Braza. Cocina al fuego. Una experiencia gastronómica que empieza en las brasas."
+        />
+        <title>Braza — Cocina al fuego</title>
+        <link
+            rel="icon"
+            href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230B0908'/%3E%3Ctext x='13' y='48' font-family='Georgia' font-size='48' fill='%23D96A28'%3Eb%3C/text%3E%3C/svg%3E"
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            :root {
+                --background: #0b0908;
+                --ember: #d96a28;
+                --cream: #efe6d8;
+                --smoke: #8c8178;
+                --seam: #2c2424;
+                --font-display: 'Fraunces', Georgia, serif;
+                --font-body: 'Archivo', sans-serif;
+            }
+            * {
+                box-sizing: border-box;
+            }
+            html {
+                background: var(--background);
+            }
+            body {
+                margin: 0;
+                color: var(--cream);
+                background: var(--background);
+                font-family: var(--font-body);
+                -webkit-font-smoothing: antialiased;
+            }
+            a {
+                color: inherit;
+                text-decoration: none;
+            }
+            button {
+                font: inherit;
+                cursor: pointer;
+            }
+            a,
+            button {
+                -webkit-tap-highlight-color: transparent;
+                touch-action: manipulation;
+            }
+            a:focus-visible,
+            button:focus-visible {
+                outline: 2px solid var(--ember);
+                outline-offset: 6px;
+            }
+            ::selection {
+                background: var(--ember);
+                color: var(--background);
+            }
+            .navigation {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                padding: 28px 4.2vw;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                z-index: 50;
+                color: var(--cream);
+                transition: color 0.45s;
+            }
+            .navigation.on-light {
+                color: var(--background);
+            }
+            .brand {
+                font-family: var(--font-display);
+                font-size: 32px;
+                font-weight: 400;
+                letter-spacing: -0.06em;
+            }
+            .nav-right {
+                display: flex;
+                gap: 45px;
+                align-items: center;
+            }
+            .nav-note {
+                font-size: 9px;
+                letter-spacing: 0.2em;
+                text-transform: uppercase;
+                opacity: 0.75;
+            }
+            .nav-link {
+                text-transform: uppercase;
+                font-size: 10px;
+                letter-spacing: 0.2em;
+                padding: 10px 0;
+                border-bottom: 1px solid currentColor;
+                transition: letter-spacing 0.4s;
+            }
+            .nav-link:hover {
+                letter-spacing: 0.3em;
+            }
+            #film-scroll {
+                position: relative;
+                height: 520vh;
+            }
+            #stage {
+                position: sticky;
+                top: 0;
+                height: 100svh;
+                overflow: hidden;
+                background: var(--background);
+            }
+            #film {
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            .vignette {
+                position: absolute;
+                inset: 0;
+                background:
+                    linear-gradient(180deg, #0003, transparent 35%, #0008),
+                    radial-gradient(ellipse, transparent 35%, #0006);
+                pointer-events: none;
+            }
+            .grain {
+                position: absolute;
+                inset: -50%;
+                width: 200%;
+                height: 200%;
+                z-index: 3;
+                opacity: 0.055;
+                pointer-events: none;
+                background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath d='M0 0h180v180H0z' fill='%23fff' filter='url(%23g)'/%3E%3C/svg%3E");
+                animation: grain 0.3s steps(2) infinite;
+            }
+            @keyframes grain {
+                0% {
+                    transform: translate(0, 0);
+                }
+                25% {
+                    transform: translate(1%, -1%);
+                }
+                75% {
+                    transform: translate(-1%, 1%);
+                }
+            }
+            .beat {
+                position: absolute;
+                z-index: 5;
+                opacity: 0;
+                pointer-events: none;
+                will-change: opacity, transform;
+            }
+            .beat-hero {
+                left: 7vw;
+                bottom: 15vh;
+            }
+            .hero-title {
+                margin: 0;
+                font-family: var(--font-display);
+                font-size: clamp(110px, 16vw, 250px);
+                font-weight: 300;
+                letter-spacing: -0.08em;
+                line-height: 0.85;
+            }
+            .hero-title span {
+                display: inline-block;
+            }
+            .hero-subline {
+                margin-top: 35px;
+                font-size: 10px;
+                letter-spacing: 0.22em;
+                text-transform: uppercase;
+            }
+            .scroll-cue {
+                display: block;
+                height: 52px;
+                width: 1px;
+                background: #efe6d840;
+                margin-top: 30px;
+                overflow: hidden;
+            }
+            .scroll-cue::after {
+                content: '';
+                display: block;
+                height: 22px;
+                width: 1px;
+                background: var(--cream);
+                animation: cue 1.8s ease-in-out infinite;
+            }
+            @keyframes cue {
+                from {
+                    transform: translateY(-23px);
+                }
+                to {
+                    transform: translateY(53px);
+                }
+            }
+            .beat-mid {
+                top: 50%;
+                left: 0;
+                width: 100%;
+                text-align: center;
+                padding-inline: 20px;
+            }
+            .beat-mid h2 {
+                font-family: var(--font-display);
+                font-weight: 300;
+                letter-spacing: -0.045em;
+                font-size: clamp(48px, 6.4vw, 108px);
+                line-height: 1.12;
+                margin: 0;
+            }
+            em {
+                font-family: var(--font-display);
+                color: var(--ember);
+                font-weight: 300;
+            }
+            .beat-final {
+                left: 7vw;
+                bottom: 20vh;
+            }
+            .final-brand {
+                margin: 0;
+                font-size: clamp(75px, 10vw, 155px);
+                line-height: 0.9;
+                letter-spacing: 0.05em;
+                font-family: var(--font-display);
+                font-weight: 300;
+            }
+            .final-tag {
+                font-family: var(--font-display);
+                font-style: italic;
+                font-size: 24px;
+                margin: 20px 0;
+            }
+            .final-rule {
+                width: 45px;
+                height: 1px;
+                background: var(--ember);
+                margin: 30px 0;
+            }
+            .button {
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+                border: 1px solid #efe6d860;
+                border-radius: 0;
+                padding: 19px 30px;
+                background: transparent;
+                color: var(--cream);
+                font-size: 10px;
+                letter-spacing: 0.18em;
+                text-transform: uppercase;
+                transition:
+                    background 0.35s,
+                    border-color 0.35s,
+                    color 0.35s;
+            }
+            .button:hover {
+                background: var(--ember);
+                color: var(--background);
+                border-color: var(--ember);
+            }
+            .final-hours {
+                margin-top: 20px;
+                color: #efe6d8b3;
+                font-size: 10px;
+                letter-spacing: 0.1em;
+            }
+            .film-readout {
+                position: absolute;
+                left: 4.2vw;
+                right: 4.2vw;
+                bottom: 28px;
+                display: grid;
+                grid-template-columns: 100px 1fr 90px;
+                gap: 25px;
+                align-items: center;
+                z-index: 6;
+                font-size: 9px;
+                text-transform: uppercase;
+                letter-spacing: 0.16em;
+            }
+            .readout-track {
+                height: 1px;
+                background: #efe6d840;
+            }
+            .readout-fill {
+                width: 100%;
+                height: 100%;
+                background: var(--ember);
+                transform: scaleX(0);
+                transform-origin: left;
+            }
+            .temperature {
+                text-align: right;
+            }
+            .seam-fade {
+                position: absolute;
+                z-index: 4;
+                inset: auto 0 0;
+                height: 34vh;
+                background: linear-gradient(transparent, var(--seam));
+                opacity: 0;
+                pointer-events: none;
+            }
+            .section {
+                position: relative;
+                padding: 125px 7vw;
+            }
+            .menu-section {
+                background: linear-gradient(var(--seam), var(--background) 30vh);
+                text-align: center;
+                padding-top: 105px;
+            }
+            .eyebrow {
+                color: var(--ember);
+                font-size: 9px;
+                text-transform: uppercase;
+                letter-spacing: 0.25em;
+                margin: 0 0 24px;
+            }
+            .section-title {
+                font-family: var(--font-display);
+                font-size: clamp(42px, 5.8vw, 88px);
+                font-weight: 300;
+                line-height: 1.08;
+                letter-spacing: -0.04em;
+                margin: 0;
+            }
+            .dishes {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 5vw;
+                margin: 90px 0 60px;
+            }
+            .dish {
+                transition: transform 0.5s;
+            }
+            .dish:hover {
+                transform: translateY(-12px);
+            }
+            .dish img {
+                width: min(100%, 300px);
+                aspect-ratio: 1;
+                border-radius: 50%;
+                object-fit: cover;
+                box-shadow: 0 22px 45px #0009;
+                transition: box-shadow 0.5s;
+            }
+            .dish:hover img {
+                box-shadow: 0 22px 60px #d96a282b;
+            }
+            .dish h3 {
+                font-family: var(--font-display);
+                font-weight: 300;
+                font-size: 27px;
+                letter-spacing: -0.02em;
+                margin: 30px 0 13px;
+            }
+            .dish p {
+                color: var(--smoke);
+                font-size: 12px;
+                line-height: 1.9;
+                max-width: 280px;
+                margin: 0 auto;
+            }
+            .dish .dish-price {
+                color: var(--ember);
+                margin-top: 20px;
+                font-size: 11px;
+                letter-spacing: 0.08em;
+            }
+            .fire-section {
+                min-height: 760px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                background: var(--background);
+                overflow: hidden;
+            }
+            .fire-image {
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                opacity: 0.5;
+            }
+            .fire-section::after {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background:
+                    linear-gradient(var(--background), transparent 45%, var(--background)),
+                    linear-gradient(90deg, #0b0908b0, transparent);
+            }
+            .fire-content {
+                position: relative;
+                z-index: 1;
+            }
+            .fire-content .section-title {
+                max-width: 800px;
+            }
+            .fire-copy {
+                color: #efe6d8a6;
+                font-size: 13px;
+                line-height: 1.9;
+                max-width: 390px;
+                margin: 30px 0 50px;
+            }
+            .statistics {
+                display: flex;
+                gap: 7vw;
+            }
+            .stat-number {
+                display: block;
+                font-family: var(--font-display);
+                font-weight: 300;
+                font-size: 54px;
+                line-height: 1.2;
+            }
+            .stat-label {
+                display: block;
+                text-transform: uppercase;
+                letter-spacing: 0.16em;
+                font-size: 9px;
+                color: var(--smoke);
+                margin-top: 12px;
+            }
+            .reservation {
+                text-align: center;
+                padding-block: 130px 145px;
+            }
+            .reservation .section-title {
+                margin-bottom: 25px;
+            }
+            .reservation > p:not(.eyebrow) {
+                color: var(--smoke);
+                font-size: 12px;
+                line-height: 1.9;
+                margin-bottom: 35px;
+            }
+            .footer {
+                border-top: 1px solid #efe6d81a;
+                padding: 40px 7vw;
+                display: flex;
+                justify-content: space-between;
+                align-items: end;
+                gap: 25px;
+            }
+            .footer p,
+            .footer a:not(.brand) {
+                color: var(--smoke);
+                font-size: 9px;
+                line-height: 1.9;
+                letter-spacing: 0.08em;
+            }
+            .footer small {
+                display: block;
+                font-size: 8px;
+                opacity: 0.5;
+                margin-top: 15px;
+            }
+            .loader {
+                position: fixed;
+                inset: 0;
+                z-index: 100;
+                background: var(--background);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transition:
+                    opacity 0.9s,
+                    visibility 0.9s;
+            }
+            .loader.done {
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+            }
+            .loader-wordmark {
+                font-family: var(--font-display);
+                font-size: 90px;
+                font-weight: 300;
+                letter-spacing: -0.07em;
+            }
+            .loader-track {
+                height: 1px;
+                width: 130px;
+                background: #efe6d826;
+                margin: 30px 0 20px;
+            }
+            .loader-progress {
+                height: 100%;
+                width: 100%;
+                transform: scaleX(0.05);
+                transform-origin: left;
+                background: var(--ember);
+                transition: transform 0.35s;
+            }
+            .loader-label {
+                color: var(--smoke);
+                font-size: 8px;
+                letter-spacing: 0.23em;
+                text-transform: uppercase;
+            }
+            dialog {
+                color: var(--cream);
+                background: var(--background);
+                border: 1px solid #d96a2860;
+                padding: 45px;
+                width: min(90vw, 550px);
+            }
+            dialog::backdrop {
+                background: #000b;
+                backdrop-filter: blur(8px);
+            }
+            dialog h2 {
+                font: 300 38px var(--font-display);
+                margin-top: 0;
+            }
+            dialog p {
+                font-size: 13px;
+                line-height: 1.9;
+                color: var(--smoke);
+            }
+            dialog button {
+                margin-top: 20px;
+            }
+            @media (max-width: 760px) {
+                .navigation {
+                    padding: 23px 6vw;
+                }
+                .brand {
+                    font-size: 27px;
+                }
+                .nav-note {
+                    display: none;
+                }
+                .nav-link {
+                    font-size: 9px;
+                }
+                #film {
+                    object-position: 66% 50%;
+                }
+                .beat-hero {
+                    left: 7vw;
+                    bottom: 23vh;
+                }
+                .hero-title {
+                    font-size: 29vw;
+                }
+                .hero-subline {
+                    max-width: 240px;
+                    line-height: 1.9;
+                    font-size: 8px;
+                    margin-top: 28px;
+                }
+                .beat-mid h2 {
+                    font-size: 13vw;
+                }
+                .beat-final {
+                    inset-inline: 7vw;
+                    bottom: 16vh;
+                }
+                .final-brand {
+                    font-size: 19vw;
+                }
+                .final-tag {
+                    font-size: 22px;
+                }
+                .film-readout {
+                    left: 7vw;
+                    right: 7vw;
+                    grid-template-columns: 75px 1fr 65px;
+                    gap: 15px;
+                    font-size: 7px;
+                }
+                .section {
+                    padding-inline: 7vw;
+                    padding-block: 85px;
+                }
+                .dishes {
+                    grid-template-columns: 1fr;
+                    gap: 65px;
+                    margin: 65px 0 50px;
+                }
+                .dish img {
+                    width: min(70vw, 280px);
+                }
+                .fire-section {
+                    min-height: 720px;
+                }
+                .statistics {
+                    gap: 30px;
+                    flex-wrap: wrap;
+                }
+                .stat-number {
+                    font-size: 45px;
+                }
+                .stat-label {
+                    font-size: 7px;
+                }
+                .footer {
+                    align-items: start;
+                    flex-direction: column;
+                    padding: 35px 7vw;
+                }
+            }
+            @media (prefers-reduced-motion: reduce) {
+                *,
+                *::before,
+                *::after {
+                    animation: none !important;
+                    transition-duration: 0s !important;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="loader" id="loader" aria-label="Preparando la experiencia">
+            <div class="loader-wordmark">Braza.</div>
+            <div class="loader-track"><div class="loader-progress"></div></div>
+            <span class="loader-label">Encendiendo la brasa</span>
+        </div>
+        <header class="navigation">
+            <a href="#film-scroll" class="brand" aria-label="Braza, inicio">Braza.</a>
+            <div class="nav-right">
+                <span class="nav-note">Nuevo León, México · Cocina al fuego</span
+                ><a href="#reservas" class="nav-link">Reservas</a>
+            </div>
+        </header>
+        <main>
+            <section
+                id="film-scroll"
+                aria-label="De la brasa a tu mesa: recorré la historia deslizando"
+            >
+                <div id="stage">
+                    <video
+                        id="film"
+                        poster="./film-scrub.jpg"
+                        muted
+                        playsinline
+                        preload="none"
+                        aria-hidden="true"
+                    ></video>
+                    <div class="vignette"></div>
+                    <div class="grain" aria-hidden="true"></div>
+                    <div class="beat beat-hero" data-in="-0.1" data-peak="0" data-out="0.30">
+                        <h1 class="hero-title" aria-label="Braza.">
+                            <span aria-hidden="true">B</span><span aria-hidden="true">r</span
+                            ><span aria-hidden="true">a</span><span aria-hidden="true">z</span
+                            ><span aria-hidden="true">a</span><span aria-hidden="true">.</span>
+                        </h1>
+                        <p class="hero-subline">Desliza — la mesa se sirve sola</p>
+                        <span class="scroll-cue" aria-hidden="true"></span>
+                    </div>
+                    <div class="beat beat-mid" data-in="0.34" data-peak="0.43" data-out="0.54">
+                        <h2>Cocinamos con <em>fuego.</em></h2>
+                    </div>
+                    <div class="beat beat-mid" data-in="0.56" data-peak="0.65" data-out="0.76">
+                        <h2>Servimos con <em>calma.</em></h2>
+                    </div>
+                    <div class="beat beat-final" data-in="0.82" data-peak="0.93" data-out="2">
+                        <h2 class="final-brand">BRAZA</h2>
+                        <p class="final-tag">Cocina al fuego</p>
+                        <div class="final-rule"></div>
+                        <a class="button" href="#reservas">Reservar mesa</a>
+                        <p class="final-hours">Mar — Sáb · Desde las 20 h</p>
+                    </div>
+                    <div class="seam-fade" aria-hidden="true"></div>
+                    <div class="film-readout" aria-hidden="true">
+                        <span id="chapter">La brasa</span>
+                        <div class="readout-track"><div class="readout-fill"></div></div>
+                        <span class="temperature">120 °C</span>
+                    </div>
+                </div>
+            </section>
+            <section class="section menu-section" id="carta">
+                <div data-reveal>
+                    <p class="eyebrow">La carta</p>
+                    <h2 class="section-title">Del rescoldo<br /><em>a la mesa.</em></h2>
+                </div>
+                <div class="dishes">
+                    <article class="dish" data-reveal>
+                        <img
+                            src="https://d8j0ntlcm91z4.cloudfront.net/user_3Bd1EO6EIHxSqCgleKKy9qZ3l1v/hf_20260726_183526_327514dd-0dbc-411b-9b8a-577c0cbeb819.png"
+                            alt="Ojo de bife servido con vegetales y salsa"
+                            loading="lazy"
+                        />
+                        <h3>Ojo de bife madurado</h3>
+                        <p>45 días de maduración. Fuego de quebracho, sal de mar y nada más.</p>
+                        <p class="dish-price">$890 MXN</p>
+                    </article>
+                    <article class="dish" data-reveal>
+                        <img
+                            src="https://d8j0ntlcm91z4.cloudfront.net/user_3Bd1EO6EIHxSqCgleKKy9qZ3l1v/hf_20260726_183115_faccf8ff-8859-4702-a568-8d5dd4278c96.png"
+                            alt="Trucha de río cocinada sobre las brasas"
+                            loading="lazy"
+                        />
+                        <h3>Trucha de río</h3>
+                        <p>Piel crocante, manteca de hierbas y el perfume sutil de las brasas.</p>
+                        <p class="dish-price">$620 MXN</p>
+                    </article>
+                    <article class="dish" data-reveal>
+                        <img
+                            src="https://d8j0ntlcm91z4.cloudfront.net/user_3Bd1EO6EIHxSqCgleKKy9qZ3l1v/hf_20260726_183118_54b3efa7-322e-4966-8210-b9d0f784dc05.png"
+                            alt="Vegetales de estación cocinados al rescoldo"
+                            loading="lazy"
+                        />
+                        <h3>Vegetales al rescoldo</h3>
+                        <p>La huerta de estación, cocida lentamente entre cenizas y leña.</p>
+                        <p class="dish-price">$380 MXN</p>
+                    </article>
+                </div>
+                <a class="button" href="#menu-completo" data-open-menu>Ver carta completa</a>
+            </section>
+            <section class="section fire-section">
+                <img
+                    class="fire-image"
+                    src="https://d8j0ntlcm91z4.cloudfront.net/user_3Bd1EO6EIHxSqCgleKKy9qZ3l1v/hf_20260726_183121_410876fc-53cd-412a-8d7a-17eb797e9c44.png"
+                    alt=""
+                    loading="lazy"
+                />
+                <div class="fire-content">
+                    <p class="eyebrow" data-reveal>Nuestro único ingrediente secreto</p>
+                    <h2 class="section-title" data-reveal>
+                        Cero gas. Cero apuro.<br /><em>Solo fuego de leña.</em>
+                    </h2>
+                    <p class="fire-copy" data-reveal>
+                        El fuego no entiende de atajos. Nosotros tampoco. Encendemos temprano,
+                        elegimos cada corte y dejamos que el tiempo haga su parte.
+                    </p>
+                    <div class="statistics">
+                        <div>
+                            <strong class="stat-number"><span data-count="480">0</span>°</strong
+                            ><span class="stat-label">Grados de pasión</span>
+                        </div>
+                        <div>
+                            <strong class="stat-number" data-count="6">0</strong
+                            ><span class="stat-label">Horas de fuego lento</span>
+                        </div>
+                        <div>
+                            <strong class="stat-number" data-count="12">0</strong
+                            ><span class="stat-label">Mesas. Nada más.</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="section reservation" id="reservas">
+                <p class="eyebrow" data-reveal>Tu lugar junto al fuego</p>
+                <h2 class="section-title" data-reveal>Una noche.<br /><em>Siete tiempos.</em></h2>
+                <p data-reveal>
+                    Nuestro menú de pasos, una conversación con el fuego.<br />Mar — Sáb · Desde las
+                    20 h · Reservas limitadas
+                </p>
+                <a class="button" href="#reservar" data-open-reservation>Reservar mi mesa</a>
+            </section>
+        </main>
+        <footer class="footer">
+            <div>
+                <a href="#film-scroll" class="brand">Braza.</a
+                ><small>Concepto de demostración · NFORCE Technologies</small>
+            </div>
+            <p>Nuevo León, México<br />Mar — Sáb · Desde las 20 h</p>
+            <div>
+                <p>
+                    <a href="tel:+528135945656">+52 81 3594 5656</a><br /><a
+                        href="mailto:cdms28@hotmail.com"
+                        >cdms28@hotmail.com</a
+                    >
+                </p>
+                <a href="./">Explorar otros diseños</a>
+            </div>
+        </footer>
+        <dialog id="menu-completo">
+            <h2>Del fuego, sin atajos.</h2>
+            <p>
+                Ojo de bife madurado · $890 MXN<br />Trucha de río · $620 MXN<br />Vegetales al
+                rescoldo · $380 MXN
+            </p>
+            <p>Menú ilustrativo para esta demostración. Los platos cambian con la temporada.</p>
+            <button class="button" data-close-dialog>Volver a la mesa</button>
+        </dialog>
+        <dialog id="reservar">
+            <h2>Tu próxima mesa.</h2>
+            <p>
+                Así comienza la experiencia de reserva. En una web real, este botón puede conectar
+                con WhatsApp, un sistema de reservas o el equipo del restaurante.
+            </p>
+            <p>
+                Esta página es una demostración y no acepta reservas reales. NFORCE Technologies ·
+                Nuevo León, México.
+            </p>
+            <a
+                class="button"
+                href="https://wa.me/528135945656?text=Hola%20NFORCE%2C%20me%20interesa%20el%20dise%C3%B1o%20de%20restaurante."
+                target="_blank"
+                rel="noopener noreferrer"
+                >Contactar a NFORCE</a
+            >
+            <button class="button" data-close-dialog>Entendido</button>
+        </dialog>
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.11/dist/lenis.min.js"></script>
+        <script>
+            (() => {
+                'use strict';
+                const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+                const video = document.querySelector('#film');
+                const driver = document.querySelector('#film-scroll');
+                const loader = document.querySelector('#loader');
+                const progressBar = document.querySelector('.loader-progress');
+                const navigation = document.querySelector('.navigation');
+                const vignette = document.querySelector('.vignette');
+                const grain = document.querySelector('.grain');
+                const seam = document.querySelector('.seam-fade');
+                const readout = document.querySelector('.readout-fill');
+                const chapter = document.querySelector('#chapter');
+                const temperature = document.querySelector('.temperature');
+                const beats = [...document.querySelectorAll('.beat')].map((element) => ({
+                    element,
+                    start: Number(element.dataset.in),
+                    peak: Number(element.dataset.peak),
+                    end: Number(element.dataset.out),
+                    centered: element.classList.contains('beat-mid'),
+                    final: element.classList.contains('beat-final'),
+                }));
+                const clamp = (value) => Math.max(0, Math.min(1, value));
+                const gsapAvailable = Boolean(window.gsap && window.ScrollTrigger);
+                let lenis = null,
+                    progress = 0,
+                    ready = false,
+                    booted = false,
+                    desiredTime = 0,
+                    pendingSeek = false;
+                let blobUrl = '',
+                    lastSample = 0,
+                    samplingEnabled = true;
+                const sampleCanvas = document.createElement('canvas');
+                sampleCanvas.width = 16;
+                sampleCanvas.height = 4;
+                const sampleContext = sampleCanvas.getContext('2d', { willReadFrequently: true });
+
+                if (gsapAvailable) {
+                    gsap.registerPlugin(ScrollTrigger);
+                    if (!reducedMotion && window.Lenis) {
+                        lenis = new Lenis({ lerp: 0.09, smoothWheel: true });
+                        lenis.on('scroll', ScrollTrigger.update);
+                        gsap.ticker.add((time) => lenis.raf(time * 1000));
+                        gsap.ticker.lagSmoothing(0);
+                    }
+                    if (!reducedMotion) {
+                        document.querySelectorAll('[data-reveal]').forEach((element) => {
+                            gsap.from(element, {
+                                opacity: 0,
+                                y: 28,
+                                duration: 1.3,
+                                ease: 'power3.out',
+                                scrollTrigger: { trigger: element, start: 'top 90%', once: true },
+                            });
+                        });
+                    }
+                }
+
+                document.querySelectorAll('[data-count]').forEach((element) => {
+                    const target = Number(element.dataset.count);
+                    if (reducedMotion || !gsapAvailable) {
+                        element.textContent = String(target);
+                        return;
+                    }
+                    const counter = { value: 0 };
+                    gsap.to(counter, {
+                        value: target,
+                        duration: 2.2,
+                        ease: 'power2.out',
+                        snap: { value: 1 },
+                        onUpdate: () => {
+                            element.textContent = String(counter.value);
+                        },
+                        scrollTrigger: { trigger: element, start: 'top 92%', once: true },
+                    });
+                });
+
+                document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+                    if (
+                        anchor.hasAttribute('data-open-menu') ||
+                        anchor.hasAttribute('data-open-reservation')
+                    )
+                        return;
+                    anchor.addEventListener('click', (event) => {
+                        const target = document.querySelector(anchor.getAttribute('href'));
+                        if (!target) return;
+                        event.preventDefault();
+                        if (lenis) lenis.scrollTo(target, { offset: -innerHeight * 0.28 });
+                        else
+                            target.scrollIntoView({
+                                behavior: reducedMotion ? 'instant' : 'smooth',
+                            });
+                    });
+                });
+                [
+                    ['[data-open-menu]', '#menu-completo'],
+                    ['[data-open-reservation]', '#reservar'],
+                ].forEach(([selector, id]) => {
+                    document.querySelector(selector).addEventListener('click', (event) => {
+                        event.preventDefault();
+                        document.querySelector(id).showModal();
+                    });
+                });
+                document
+                    .querySelectorAll('[data-close-dialog]')
+                    .forEach((button) =>
+                        button.addEventListener('click', () => button.closest('dialog').close()),
+                    );
+
+                function finishLoading() {
+                    if (booted) return;
+                    booted = true;
+                    progressBar.style.transform = 'scaleX(1)';
+                    setTimeout(() => {
+                        loader.classList.add('done');
+                        if (gsapAvailable && !reducedMotion)
+                            gsap.from('.hero-title span', {
+                                yPercent: 120,
+                                opacity: 0,
+                                duration: 1.25,
+                                stagger: 0.055,
+                                ease: 'power4.out',
+                            });
+                    }, 250);
+                }
+                function seek() {
+                    if (!ready) return;
+                    if (video.seeking) {
+                        pendingSeek = true;
+                        return;
+                    }
+                    if (Math.abs(video.currentTime - desiredTime) > 0.018)
+                        video.currentTime = desiredTime;
+                }
+                video.addEventListener('seeked', () => {
+                    if (pendingSeek) {
+                        pendingSeek = false;
+                        seek();
+                    }
+                });
+                video.addEventListener('loadedmetadata', () => {
+                    ready = Number.isFinite(video.duration);
+                    progressBar.style.transform = 'scaleX(.55)';
+                });
+                video.addEventListener('canplay', finishLoading, { once: true });
+                video.addEventListener('error', finishLoading, { once: true });
+                setTimeout(finishLoading, 9000);
+
+                async function loadFilm() {
+                    progressBar.style.transform = 'scaleX(.15)';
+                    try {
+                        const response = await fetch('./film-scrub.mp4');
+                        if (!response.ok) throw new Error('Video unavailable');
+                        blobUrl = URL.createObjectURL(await response.blob());
+                        video.src = blobUrl;
+                    } catch {
+                        video.src = './film-scrub.mp4';
+                    }
+                    video.load();
+                }
+                function sampleLuminance(time) {
+                    if (
+                        !samplingEnabled ||
+                        !sampleContext ||
+                        video.readyState < 2 ||
+                        time - lastSample < 180
+                    )
+                        return;
+                    lastSample = time;
+                    try {
+                        sampleContext.drawImage(
+                            video,
+                            0,
+                            0,
+                            video.videoWidth,
+                            video.videoHeight * 0.15,
+                            0,
+                            0,
+                            16,
+                            4,
+                        );
+                        const pixels = sampleContext.getImageData(0, 0, 16, 4).data;
+                        let luminance = 0;
+                        for (let index = 0; index < pixels.length; index += 4)
+                            luminance +=
+                                pixels[index] * 0.2126 +
+                                pixels[index + 1] * 0.7152 +
+                                pixels[index + 2] * 0.0722;
+                        navigation.classList.toggle(
+                            'on-light',
+                            luminance / 64 > 138 &&
+                                driver.getBoundingClientRect().bottom > innerHeight,
+                        );
+                    } catch {
+                        samplingEnabled = false;
+                    }
+                }
+                function render(time) {
+                    const rectangle = driver.getBoundingClientRect();
+                    const target = clamp(
+                        -rectangle.top / Math.max(1, driver.offsetHeight - innerHeight),
+                    );
+                    progress += (target - progress) * (reducedMotion ? 1 : 0.14);
+                    if (Math.abs(target - progress) < 0.0001) progress = target;
+                    if (ready) {
+                        desiredTime = progress * Math.max(0, video.duration - 0.05);
+                        seek();
+                    }
+                    for (const beat of beats) {
+                        const opacity = beat.final
+                            ? clamp((progress - beat.start) / (beat.peak - beat.start))
+                            : progress < beat.peak
+                              ? clamp((progress - beat.start) / (beat.peak - beat.start))
+                              : clamp((beat.end - progress) / (beat.end - beat.peak));
+                        beat.element.style.opacity = String(opacity);
+                        beat.element.style.transform = `translateY(${beat.centered ? 'calc(-50% + ' : ''}${(1 - opacity) * 14}px${beat.centered ? ')' : ''})`;
+                        beat.element.style.pointerEvents =
+                            beat.final && opacity > 0.5 ? 'auto' : 'none';
+                        beat.element.inert = opacity < 0.5;
+                    }
+                    const fade = clamp((progress - 0.92) / 0.08);
+                    seam.style.opacity = String(fade);
+                    vignette.style.opacity = String(1 - fade * 0.65);
+                    grain.style.opacity = String(0.055 * (1 - fade));
+                    readout.style.transform = `scaleX(${progress})`;
+                    chapter.textContent =
+                        progress < 0.35 ? 'La brasa' : progress < 0.7 ? 'La mesa' : 'El salón';
+                    temperature.textContent = `${Math.round(120 + 360 * progress)} °C`;
+                    sampleLuminance(time);
+                    requestAnimationFrame(render);
+                }
+                addEventListener('pagehide', () => {
+                    if (blobUrl) URL.revokeObjectURL(blobUrl);
+                });
+                loadFilm();
+                requestAnimationFrame(render);
+            })();
+        </script>
+    </body>
+</html>
